@@ -29,7 +29,7 @@ const ContDown = () => {
 
   useEffect(() => {
     // Connect to the Socket.IO server
-    socket = io("https://mantrimall-1.onrender.com");
+    socket = io();
 
     socket.on("timer", (data) => {
       setPeriod(data.period);
