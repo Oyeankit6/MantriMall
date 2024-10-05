@@ -9,26 +9,22 @@ const ParityRecordTable = () => {
   const { results, setResults, period, activeCategory, setActiveCategory } =
     useContext(StoreContext);
 
-const updateResults = useCallback((data) => {
-    setResults(data);
-  }, []); // Empty dependency array ensures the function is stable
+async function fetchResults() {
+    try {
+      const response = await fetch("/api/getColorAndNumber");
+      if (!response.ok) {
+        throw new Error("Failed to fetch results");
+      }
+      const data = await response.json();
+      setResults(data);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   useEffect(() => {
-    const fetchResults = async () => {
-      try {
-        const response = await fetch("/api/getColorAndNumber");
-        if (!response.ok) {
-          throw new Error("Failed to fetch results");
-        }
-        const data = await response.json();
-        updateResults(data); // Use memoized updateResults function
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
     fetchResults();
-  }, [period, updateResults]); // Add updateResults to the dependency array
+  }, [period]);
 
 
   const records = results;
