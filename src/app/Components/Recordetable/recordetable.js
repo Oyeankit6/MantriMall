@@ -29,7 +29,7 @@ const updateResults = useCallback((data) => {
 
     fetchResults();
   }, [period, updateResults]); // Add updateResults to the dependency array
-};
+
 
   const records = results;
 
