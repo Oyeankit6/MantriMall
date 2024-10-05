@@ -11,7 +11,10 @@ const ParityRecordTable = () => {
 
 async function fetchResults() {
     try {
-      const response = await fetch("/api/getColorAndNumber");
+      const response = await fetch("/api/getColorAndNumber",{
+  method: "GET",
+  cache: "no-store",
+});
       if (!response.ok) {
         throw new Error("Failed to fetch results");
       }
