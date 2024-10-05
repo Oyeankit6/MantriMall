@@ -12,7 +12,7 @@ const ParityRecordTable = () => {
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const response = await fetch("https://mantrimall-1.onrender.com/api/getColorAndNumber"); // Adjust the API route as needed
+        const response = await fetch("api/getColorAndNumber"); // Adjust the API route as needed
         if (!response.ok) {
           throw new Error("Failed to fetch results");
         }
