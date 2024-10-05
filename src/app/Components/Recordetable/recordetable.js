@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState , useCallback } from "react";
 import styles from "../../styles/recordetable.module.css";
 import { StoreContext } from "@/app/Context/AccountContext";
 
@@ -9,22 +9,27 @@ const ParityRecordTable = () => {
   const { results, setResults, period, activeCategory, setActiveCategory } =
     useContext(StoreContext);
 
+const updateResults = useCallback((data) => {
+    setResults(data);
+  }, []); // Empty dependency array ensures the function is stable
+
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const response = await fetch("api/getColorAndNumber"); // Adjust the API route as needed
+        const response = await fetch("/api/getColorAndNumber");
         if (!response.ok) {
           throw new Error("Failed to fetch results");
         }
         const data = await response.json();
-        setResults(data); // Set the results based on the response
+        updateResults(data); // Use memoized updateResults function
       } catch (err) {
         console.error(err);
       }
     };
 
     fetchResults();
-  }, [period]);
+  }, [period, updateResults]); // Add updateResults to the dependency array
+};
 
   const records = results;
 
